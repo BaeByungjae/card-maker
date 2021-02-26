@@ -1,21 +1,25 @@
+import React, { memo, useRef } from "react";
 import styles from "./card_edit_form.module.css";
-import React from "react";
 import Button from "../button/button";
 
-const CardEditForm = ({ FileInput, card, updateCard, deleteCard }) => {
-  const {
-    name,
-    company,
-    title,
-    email,
-    message,
-    theme,
-    fileName,
-    fileURL,
-  } = card;
-  const onSubmit = () => {
-    deleteCard(card);
+const CardEditForm = memo(({ FileInput, card, updateCard, deleteCard }) => {
+  const nameRef = useRef();
+  const companyRef = useRef();
+  const themeRef = useRef();
+  const titleRef = useRef();
+  const emailRef = useRef();
+  const messageRef = useRef();
+
+  const { name, company, title, email, message, theme, fileName } = card;
+
+  const onFileChange = (file) => {
+    updateCard({
+      ...card,
+      fileName: file.name,
+      fileURL: file.url,
+    });
   };
+
   const onChange = (event) => {
     if (event.currentTarget == null) {
       return;
@@ -26,58 +30,62 @@ const CardEditForm = ({ FileInput, card, updateCard, deleteCard }) => {
       [event.currentTarget.name]: event.currentTarget.value,
     });
   };
-  const onFileChange = (file) => {
-    updateCard({
-      ...card,
-      fileName: file.name,
-      fileURL: file.url,
-    });
+
+  const onSubmit = () => {
+    deleteCard(card);
   };
+
   return (
     <form className={styles.form}>
       <input
-        onChange={onChange}
         className={styles.input}
         type="text"
         name="name"
+        ref={nameRef}
         value={name}
+        onChange={onChange}
       />
       <input
-        onChange={onChange}
         className={styles.input}
         type="text"
-        name="comapny"
+        name="company"
+        ref={companyRef}
         value={company}
+        onChange={onChange}
       />
       <select
-        onChange={onChange}
         className={styles.select}
         name="theme"
+        ref={themeRef}
         value={theme}
+        onChange={onChange}
       >
         <option value="light">light</option>
         <option value="dark">dark</option>
         <option value="colorful">colorful</option>
       </select>
       <input
-        onChange={onChange}
         className={styles.input}
         type="text"
         name="title"
+        ref={titleRef}
         value={title}
+        onChange={onChange}
       />
       <input
-        onChange={onChange}
         className={styles.input}
         type="text"
         name="email"
+        ref={emailRef}
         value={email}
+        onChange={onChange}
       />
       <textarea
-        onChange={onChange}
         className={styles.textarea}
+        ref={messageRef}
         name="message"
         value={message}
+        onChange={onChange}
       />
       <div className={styles.fileInput}>
         <FileInput name={fileName} onFileChange={onFileChange} />
@@ -85,6 +93,6 @@ const CardEditForm = ({ FileInput, card, updateCard, deleteCard }) => {
       <Button name="Delete" onClick={onSubmit} />
     </form>
   );
-};
+});
 
 export default CardEditForm;

@@ -1,6 +1,7 @@
 @value makerLightPink,makerGreen,makerWhite,makerBlack from '../../common/colors.css';
 .container {
   flex-basis: 50%;
+  overflow-y: auto;
 }
 .title {
   font-size: 1.1em;

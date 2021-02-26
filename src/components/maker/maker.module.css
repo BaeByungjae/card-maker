@@ -9,6 +9,7 @@
 }
 .container {
   display: flex;
+  min-height: 0;
 }
 @media screen and (max-width: 62rem) {
   .container {
